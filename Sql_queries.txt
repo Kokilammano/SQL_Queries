@@ -1,0 +1,121 @@
+
+mysql> select * from employee;
++--------+-----------+---------+---------+
+| emp_id | emp_name  | emp_sal | dept_id |
++--------+-----------+---------+---------+
+|    100 | Anu       | 6000    |       1 |
+|    101 | Elamathi  | 5000    |       3 |
+|    102 | Malar     | 7500    |       5 |
+|    103 | Gowsika   | 4000    |       2 |
+|    104 | Kavi      | 2000    |       1 |
+|    105 | Diya      | 1000    |       4 |
+|    106 | Yakshita  | 2500    |       3 |
+|    107 | Yoga      | 5500    |       2 |
+|    108 | Aishwarya | 8000    |       4 |
++--------+-----------+---------+---------+
+9 rows in set (0.00 sec)
+
+mysql> select * from department;
++---------+-------------+
+| dept_id | dept_name   |
++---------+-------------+
+|       1 | development |
+|       2 | testing     |
+|       3 | production  |
+|       4 | marketing   |
+|       5 | designing   |
++---------+-------------+
+5 rows in set (0.00 sec)
+
+1.Display the employee name,employee id,salary,dept_id and department name for all the employees.
+
+mysql> select emp_name,emp_id,emp_sal,employee.dept_id,dept_name from employee right join department on employee.dept_id=department.dept_id;
++-----------+--------+---------+---------+-------------+
+| emp_name  | emp_id | emp_sal | dept_id | dept_name   |
++-----------+--------+---------+---------+-------------+
+| Anu       |    100 | 6000    |       1 | development |
+| Kavi      |    104 | 2000    |       1 | development |
+| Gowsika   |    103 | 4000    |       2 | testing     |
+| Yoga      |    107 | 5500    |       2 | testing     |
+| Elamathi  |    101 | 5000    |       3 | production  |
+| Yakshita  |    106 | 2500    |       3 | production  |
+| Diya      |    105 | 1000    |       4 | marketing   |
+| Aishwarya |    108 | 8000    |       4 | marketing   |
+| Malar     |    102 | 7500    |       5 | designing   |
++-----------+--------+---------+---------+-------------+
+9 rows in set (0.00 sec)
+
+
+2.Query to find average salaries of all the departments
+
+mysql> select dept_name,avg(emp_sal) as average_sal from employee join department on employee.dept_id=department.dept_id group by dept_name;
++-------------+-------------+
+| dept_name   | average_sal |
++-------------+-------------+
+| designing   |        7500 |
+| development |        4000 |
+| marketing   |        4500 |
+| production  |        3750 |
+| testing     |        4750 |
++-------------+-------------+
+5 rows in set (0.00 sec)
+
+3.Query to display all the employees with their department names whose salary is above 3000 
+
+mysql> select emp_name,dept_name from employee join department on employee.dept_id=department.dept_id where emp_sal>3000;
++-----------+-------------+
+| emp_name  | dept_name   |
++-----------+-------------+
+| Anu       | development |
+| Elamathi  | production  |
+| Malar     | designing   |
+| Gowsika   | testing     |
+| Yoga      | testing     |
+| Aishwarya | marketing   |
++-----------+-------------+
+6 rows in set (0.00 sec)
+
+
+mysql> select * from employee;
++--------+-----------+---------+---------+
+| emp_id | emp_name  | emp_sal | dept_id |
++--------+-----------+---------+---------+
+|    100 | Anu       | 6000    |       1 |
+|    101 | Elamathi  | 5000    |       3 |
+|    102 | Malar     | 7500    |       5 |
+|    103 | Gowsika   | 4000    |       2 |
+|    104 | Kavi      | 2000    |       1 |
+|    105 | Diya      | 1000    |       4 |
+|    106 | Yakshita  | 2500    |       3 |
+|    107 | Yoga      | 5500    |       2 |
+|    108 | Aishwarya | 8000    |       4 |
++--------+-----------+---------+---------+
+9 rows in set (0.00 sec)
+
+4.Query to display the average salaries of all the employees who works as developer
+
+mysql> select dept_name,avg(emp_sal) as developer_sal from department join employee on employee.dept_id=department.dept_id where dept_name="development";
++-------------+---------------+
+| dept_name   | developer_sal |
++-------------+---------------+
+| development |          4000 |
++-------------+---------------+
+1 row in set (0.00 sec)
+
+5.Query to list the employee name,employee id,salary and department name in the ascending order of their salaries
+
+mysql> select emp_name,emp_id,emp_sal,dept_name from employee join department on employee.dept_id=department.dept_id order by emp_sal ASC;
++-----------+--------+---------+-------------+
+| emp_name  | emp_id | emp_sal | dept_name   |
++-----------+--------+---------+-------------+
+| Diya      |    105 | 1000    | marketing   |
+| Kavi      |    104 | 2000    | development |
+| Yakshita  |    106 | 2500    | production  |
+| Gowsika   |    103 | 4000    | testing     |
+| Elamathi  |    101 | 5000    | production  |
+| Yoga      |    107 | 5500    | testing     |
+| Anu       |    100 | 6000    | development |
+| Malar     |    102 | 7500    | designing   |
+| Aishwarya |    108 | 8000    | marketing   |
++-----------+--------+---------+-------------+
+9 rows in set (0.00 sec)
